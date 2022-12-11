@@ -1,0 +1,12 @@
+ +Cheats(see whole map/maybe edit save?)
+ 	if enabled
+        +how many of each perk you have / increase it
+        +unlock certain biome   0 = not found    1 = found   2 = found with cheats so dont add to overall
+        +unlcok whole map       makes everything 3
+	    +edit gold
+	    +edit wands everywhere  hard code to enable perk u know where save file is
+      % of map unlocked
+      small sidebar with little info about current selected square
+ //when hover over section show biome name maybe
+----------------------------------------------------------------------------------------
+
