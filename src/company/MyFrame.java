@@ -8,7 +8,7 @@ public class MyFrame extends JFrame {
 
     MyFrame(File saveFile) {
         this.setTitle(saveFile.getName());
-       //new DiscoverBiomes(saveFile);
+        new DiscoverBiomes(saveFile);
         gui = new GUI(this);
         this.setSize(1920, 1080);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
