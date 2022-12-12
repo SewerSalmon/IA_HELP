@@ -16,7 +16,7 @@ $biome_gold
 $biome_the_end
 $biome_lake
 $biome_lava
-$biome_liquidcave
+$biome_fungiforest$biome_fungiforest$biome_fungiforest$biome_fungiforest
 $biome_orbroom
 $biome_pyramid
 $biome_rainforest
@@ -27,7 +27,7 @@ $biome_secret_lab
 $biome_shop_room
 $biome_snowcastle
 $biome_snowcave
-$biome_sunseed
+sunseed
 $biome_tower
 $biome_vault
 $biome_vault_frozen

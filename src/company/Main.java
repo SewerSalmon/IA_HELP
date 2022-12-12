@@ -8,7 +8,7 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        File[] allfiles =new File("Map").listFiles();
+        //File[] allfiles =new File("Map").listFiles();
 
        // for (File f:allfiles) {
 

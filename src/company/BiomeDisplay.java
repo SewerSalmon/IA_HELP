@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
 
 public class BiomeDisplay extends JPanel{
 
@@ -49,12 +50,13 @@ public class BiomeDisplay extends JPanel{
     }
     };
 
+    JLabel label= new JLabel();
     public BiomeDisplay(MyFrame a,String biome){
 
         this.setBackground(Color.black);
         change = a;
         this.setLayout(null);
-        biomes.setBounds(10,10,200,100);
+        biomes.setBounds(0,0,400,50);
         ActionListener switchDisplay = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,16 +80,23 @@ public class BiomeDisplay extends JPanel{
                 biomes.addItem(name.replace("$biome_",""));
             }
         }
-        JButton back = buttonAdd("Back to map",400,500,100,80);
+        JButton back = buttonAdd("Back to map",400,0,150,50);
         biomeChange(biome);
         biomes.setSelectedItem(currentBiome);
-
+        JButton next = buttonAdd("Next Biome section",550,0,150,50);
         txtCheck();
+        JButton prev = buttonAdd("Previous Biome section",700,0,150,50);
 
         fileRead();
 
         JScrollPane scrollBarForTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollBarForTextArea.setBounds(1500,0,420,1080);
+        scrollBarForTextArea.setBounds(1700,50,220,1080);
+
+        label.setVisible(true);
+        label.setBounds(1700,0,1000,50);
+        label.setBackground(Color.WHITE);
+        label.setOpaque(true);
+        this.add(label);
         this.add(scrollBarForTextArea);
 
       }
@@ -180,6 +189,51 @@ public class BiomeDisplay extends JPanel{
                     }
                 }
             }*/
+            if (e.getActionCommand().equals("Next Biome section")){
+
+            // get last index of array
+                int lastIndex = imagesInBiome.size() - 1;
+                // save first element
+                String  oldFirst = imagesInBiome.get(0);
+
+                // copy the elements from  right to left
+                for (int i = 0; i < lastIndex; i++)
+                    imagesInBiome.set(i, imagesInBiome.get(i+1));
+
+                // put the first element last
+                imagesInBiome.set(lastIndex,oldFirst);
+                prevPt = new Point(600,300);
+                imageCorner.setLocation(600,300);
+                repaint();
+            }
+
+            if (e.getActionCommand().equals("Previous Biome section")){
+                System.out.println();
+                System.out.println("start");
+                for(int i = 0; i<imagesInBiome.size();i++){
+                    System.out.println(imagesInBiome.get(i));
+                }
+            // get last index of array
+                int lastIndex = imagesInBiome.size() - 1;
+                // save last element
+                String oldLast = imagesInBiome.get(lastIndex);
+
+                // copy the elements from  left to right
+                for (int i = lastIndex; i != 0; i--)
+                    imagesInBiome.set(i,imagesInBiome.get(i-1));
+
+                // put the last element first
+                imagesInBiome.set(0,oldLast);
+                System.out.println("end");
+                for(int i = 0; i<imagesInBiome.size();i++){
+                    System.out.println(imagesInBiome.get(i));
+                }
+                prevPt = new Point(600,300);
+                imageCorner.setLocation(600,300);
+                repaint();
+            }
+
+
             if(e.getActionCommand().equals("Back to map")){
 
                     File file;
@@ -266,9 +320,10 @@ public class BiomeDisplay extends JPanel{
         currentBiome = biome;
         txtCheck();
         fileRead();
-        DragPanel("Map Squares/" +imagesInBiome.get(0),new Point(500,0));
+        DragPanel("Map Squares/" +imagesInBiome.get(0),new Point(600,300));
         imageCorner.setLocation(prevPt);
         repaint();
+        label.setText("BiomeNotes " + currentBiome);
 
     }
 
@@ -276,7 +331,7 @@ public class BiomeDisplay extends JPanel{
 
     int WIDTH;
     int HEIGHT;
-    Point prevPt = new Point(500,0);
+    Point prevPt = new Point(600,300);
     public void DragPanel(String FileLocation,Point point){
         image = new ImageIcon(FileLocation);
         WIDTH = image.getIconWidth();
@@ -310,19 +365,16 @@ public class BiomeDisplay extends JPanel{
             }
         }
     }
-    ArrayList<String> movedImages = imagesInBiome;
-
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!(imageCorner == null)) {
-            image.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
 
             for(int x = 0;x<imagesInBiome.size();x++){
-////make it check how far each block of images are from each otthe  to make block see if mages are next to eac other d use all cores to check distances
-                   int moveX = 500 * ( Integer.parseInt(movedImages.get(x).split("\\.")[1]) - Integer.parseInt(movedImages.get(0).split("\\.")[1]) );
-                   int moveY = 500 * ( Integer.parseInt(movedImages.get(x).split("\\.")[0]) - Integer.parseInt(movedImages.get(0).split("\\.")[0]) );
+
+                   int moveX = 500 * ( Integer.parseInt(imagesInBiome.get(x).split("\\.")[1]) - Integer.parseInt(imagesInBiome.get(0).split("\\.")[1]) );
+                   int moveY = 500 * ( Integer.parseInt(imagesInBiome.get(x).split("\\.")[0]) - Integer.parseInt(imagesInBiome.get(0).split("\\.")[0]) );
 
                int mapsquareY = Integer.parseInt(imagesInBiome.get(x).split("\\.")[0]);
                int mapsquareX = Integer.parseInt(imagesInBiome.get(x).split("\\.")[1]);
