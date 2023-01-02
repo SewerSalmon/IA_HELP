@@ -99,7 +99,7 @@ class SelectSave extends JPanel {
                ff.setLayout(null);
                 File selectedFile = null;
                 JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "Xml");
                 fileChooser.setFileFilter(filter);
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(ff);
@@ -107,7 +107,7 @@ class SelectSave extends JPanel {
                     selectedFile = fileChooser.getSelectedFile();
                 }
                 assert selectedFile != null;
-                if(selectedFile.getName().endsWith(".txt")){
+                if(selectedFile.getName().endsWith("player.xml")){
                     MyFrame mf = new MyFrame(selectedFile);
                     frame.dispose();
                 }else {

@@ -25,8 +25,10 @@ public class GUI extends JPanel {
         this.setBackground(Color.WHITE);
         change = a;
         this.setLayout(null);
+        System.out.println( save.getAbsolutePath());
 
-        if(save == new File("C:/Users/User/AppData/LocalLow/Nolla_Games_Noita/save00/player.xml")){
+        if(save.getAbsolutePath().contains("player.xml")&&save.getAbsolutePath().contains("Nolla_Games_Noita")&&save.getAbsolutePath().contains("save00")){
+            System.out.println("diuasdaisuduihsad");
             buttonAdd("Cheats",350 , 0, 150, 50);
             this.add(ch);
         }
