@@ -37,31 +37,8 @@ class SelectSave extends JPanel {
         if(!((new File(System.getProperty("user.home")+"/NoitaHelp")).exists())){
             Files.createDirectories(Paths.get(System.getProperty("user.home")+"/NoitaHelp"));
         }
-        if(!((new File(System.getProperty("user.home")+"/NoitaHelp/Undiscovered")).exists())){
-            Files.createDirectories(Paths.get(System.getProperty("user.home")+"/NoitaHelp/Undiscovered"));
-        }
-
-        if((new File(System.getProperty("user.home")+"/NoitaHelp/Undiscovered")).listFiles().length!=6381){
-            File[] files = new File(System.getProperty("user.home")+"/NoitaHelp/Undiscovered").listFiles();
-            if(files!=null) { //some JVMs return null for empty dirs
-                for(File f: files) {
-                    if(f.isDirectory()) {
-                       f.delete();
-                    } else {
-                        f.delete();
-                    }
-                }
-            }
-            File[] g = new File("Map").listFiles();
-            for(File f: g) {
-                try {
-                    String temp = f.getName();
-                    BufferedImage bi = ImageIO.read(f);
-                    ImageIO.write(bi, "jpg", new File(System.getProperty("user.home")+"/NoitaHelp/Undiscovered/" + temp));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        if((new File("Map")).listFiles().length!=6381){
+            System.out.println("error when downloading please reistall");
         }
 
 

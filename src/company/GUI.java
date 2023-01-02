@@ -1,21 +1,37 @@
 package company;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class GUI extends JPanel {
     String[] mapSquares;
     String currentSquare;
     MyFrame change;
+    JProgressBar progressBar;
+    Boolean UnlockedAll = false;
+    JButton MAP;
+    Cheats ch = new Cheats();
 
-    public GUI(MyFrame a) {
+    public GUI(MyFrame a, File save) {
+
+
         this.setBackground(Color.WHITE);
         change = a;
         this.setLayout(null);
-        buttonAdd("Isfan", 10, 0, 80, 40);
-        buttonAdd("Giri", 100, 0, 80, 40);
+
+        if(save == new File("C:/Users/User/AppData/LocalLow/Nolla_Games_Noita/save00/player.xml")){
+            buttonAdd("Cheats",350 , 0, 150, 50);
+            this.add(ch);
+        }
+       MAP = buttonAdd("Unlock entire Map", 0, 0, 150, 50);
+
         File[] folder = new File("Map Squares/").listFiles();
         mapSquares = new String[folder.length];
         int counter = 0;
@@ -28,26 +44,130 @@ public class GUI extends JPanel {
             counter++;
         }
 
+
+
         currentSquare = mapSquares[start];
         DragPanel("Map Squares/" + currentSquare, new Point(0, 0));
         imageCorner.setLocation(prevPt);
         repaint();
+        Progress();
     }
 
-    public void buttonAdd(String name, int x, int y, int width, int height) {
+    public void Progress(){
+        JTextArea a = new JTextArea("  Map unlock progress (no cheats)");
+        a.setBounds(150,0,200,30);
+        a.setEditable(false);
+        this.add(a);
+        a.setVisible(true);
+
+        progressBar = new JProgressBar(0,100);
+        progressBar.setBounds(150,30,200,20);
+        int numerator = 0;
+        int denominator = 0;
+        for (String s : mapSquares){
+            if (s.contains("empty")||s.contains("$biome_forest")){
+            } else if (s.contains("NULL")){
+                numerator++;
+                denominator++;
+            }else {denominator++;}
+        }
+
+        int c =  100 - (int) (100 * ((double) numerator/denominator));
+         progressBar.setValue(c);
+        this.add(progressBar);
+        progressBar.setVisible(true);
+        progressBar.setStringPainted(true);
+    }
+
+    public void invisible(){
+        setVisible(false);
+    }
+    public void visible(){
+        setVisible(true);
+    }
+
+    public JButton buttonAdd(String name, int x, int y, int width, int height) {
         JButton button;
         button = new JButton(name);
         button.setBounds(x, y, width, height);
         button.addActionListener(new ClickButton());
         add(button);
+        return button;
     }
 
+    boolean cheatsV = false;
     private class ClickButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(e.getActionCommand());
+            if(e.getActionCommand().equals("Unlock entire Map")){
+               MAP.setVisible(false);
+
+               JFrame wait = new JFrame("please wait");
+               wait.setVisible(true);
+               wait.setBounds(500,500,500,0);
+
+                invisible();
+
+
+                mapUnlock(wait);
+            }
+            if(e.getActionCommand().equals("Cheats")){
+                cheatsV = !cheatsV;
+                ch.setVisible(cheatsV);
+                ch.setLocation(350,115);
+            }
         }
     }
+
+    public void mapUnlock(JFrame w){
+        File dir = new File("Map Squares");
+                File[] contents = dir.listFiles();
+                if (contents != null) {
+                    for (File f : contents) {
+                        try {
+                            Files.delete(Path.of(f.getPath()));
+                        } catch (IOException g) {
+                            g.printStackTrace();
+                        }
+                    }
+                }
+
+                dir.mkdirs();
+
+
+                File[] folder = new File("Map").listFiles();
+
+                for (File file : folder) {
+                    String name = file.getName();
+                    if (Character.isDigit(name.charAt(0))) {
+                        try {
+                            BufferedImage bi = ImageIO.read(file);
+                            ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
+
+                        }catch (IOException h){
+                            h.printStackTrace();
+                        }
+                    }
+                }
+
+
+                folder = new File("Map Squares/").listFiles();
+                mapSquares = new String[folder.length];
+                int counter = 0;
+                int start = 0;
+                for (File file : folder) {
+                    mapSquares[counter] = file.getName();
+                    if(file.getName().equals("41.29.$biome_forest.jpg")){
+                        start=counter;
+                    }
+                    counter++;
+                }
+
+                repaint();
+                w.dispose();
+                visible();
+    }
+
 
     ImageIcon image;
     int WIDTH;
@@ -116,7 +236,6 @@ public class GUI extends JPanel {
                             moveY= moveY-213;
                         }
 
-
                         (new ImageIcon("Map Squares/" + mapSquares[x])).paintIcon(this, g, (int) imageCorner.getX() + moveX, (int) imageCorner.getY() + moveY);
                     }
                 }
@@ -124,7 +243,6 @@ public class GUI extends JPanel {
             }
         }
     }
-
 
     boolean ClickedInImage;
 
@@ -193,6 +311,7 @@ public class GUI extends JPanel {
 
 
                     image = new ImageIcon("Map Squares/" + currentSquare);
+
                     WIDTH = image.getIconWidth();
                     HEIGHT = image.getIconHeight();
 

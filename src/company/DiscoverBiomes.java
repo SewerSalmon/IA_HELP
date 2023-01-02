@@ -92,7 +92,7 @@ public class DiscoverBiomes {
         dir.mkdirs();
 
 
-        folder = new File(System.getProperty("user.home")+"/NoitaHelp/Undiscovered").listFiles();
+        folder = new File("Map").listFiles();
 
         String allStrings = "$biome_empty,$biome_forest";
         try {
