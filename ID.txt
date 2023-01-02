@@ -16,7 +16,7 @@ $biome_gold
 $biome_the_end
 $biome_lake
 $biome_lava
-$biome_fungiforest$biome_fungiforest$biome_fungiforest$biome_fungiforest
+$biome_fungiforest
 $biome_orbroom
 $biome_pyramid
 $biome_rainforest
