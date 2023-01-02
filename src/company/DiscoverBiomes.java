@@ -34,7 +34,7 @@ public class DiscoverBiomes {
                     String temp = scan.nextLine();
                     newdiscoveries = newdiscoveries + temp;
                 }
-                if (newdiscoveries.contains("$biome_???")){
+                if (newdiscoveries.contains("???")){
                     try (//true = new line false = replace whole file
                          FileWriter fw = new FileWriter(new File(System.getProperty("user.home")+"/NoitaHelp/OverallSave.txt"), true);
                          PrintWriter pw = new PrintWriter(fw)
@@ -102,7 +102,7 @@ public class DiscoverBiomes {
                 String temp = scan.nextLine();
                 allStrings = allStrings + ","+temp;
             }
-            if (allStrings.contains("$biome_???")){
+            if (allStrings.contains("???")){
                 allStrings = allStrings + ","+"$biome_Diamond";
             }
         } catch (Exception e) {
