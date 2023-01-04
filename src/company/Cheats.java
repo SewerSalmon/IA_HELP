@@ -22,12 +22,12 @@ public class Cheats extends JPopupMenu implements ActionListener {
         JMenuItem addGold = new JMenuItem("Infinite gold");
         add(addGold);
 
-        JMenuItem editWands = new JMenuItem("Infinite spells");
-        add(editWands);
+        JMenuItem editspells = new JMenuItem("Infinite spells");
+        add(editspells);
 
         spawnTeleport.addActionListener(this);
         addGold.addActionListener(this);
-        editWands.addActionListener(this);
+        editspells.addActionListener(this);
     }
 
     public void visible(){
@@ -55,6 +55,8 @@ public class Cheats extends JPopupMenu implements ActionListener {
                    }catch (Exception e) {
                        throw new RuntimeException(e);
                    }
+                JOptionPane.showMessageDialog(null, "The character in your save has been teleported");
+
             }
             else if(menuText.equals("Infinite spells")){
                 String allStrings = "";
@@ -67,7 +69,7 @@ public class Cheats extends JPopupMenu implements ActionListener {
                 }catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
+                JOptionPane.showMessageDialog(null, "You now have infinite spells in your save");
             }
             else if(menuText.equals("Infinite gold")){
                 File fileToBeModified = new File("C:/Users/User/AppData/LocalLow/Nolla_Games_Noita/save00/player.xml");
@@ -103,7 +105,7 @@ public class Cheats extends JPopupMenu implements ActionListener {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
+                JOptionPane.showMessageDialog(null, "Your now have infinite gold in your save");
             }
         }
     }

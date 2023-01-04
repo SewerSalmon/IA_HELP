@@ -124,34 +124,27 @@ public class GUI extends JPanel {
     public void mapUnlock(JFrame w){
         File dir = new File("Map Squares");
                 File[] contents = dir.listFiles();
-                if (contents != null) {
-                    for (File f : contents) {
-                        try {
-                            Files.delete(Path.of(f.getPath()));
-                        } catch (IOException g) {
-                            g.printStackTrace();
-                        }
-                    }
-                }
-
-                dir.mkdirs();
-
 
                 File[] folder = new File("Map").listFiles();
+                int count = -1;
 
                 for (File file : folder) {
+                    count++;
                     String name = file.getName();
                     if (Character.isDigit(name.charAt(0))) {
-                        try {
-                            BufferedImage bi = ImageIO.read(file);
-                            ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
+                        assert contents != null;
+                        if (contents[count].getName().contains("NULL")){
+                            contents[count].delete();
+                            try {
+                                BufferedImage bi = ImageIO.read(file);
+                                ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
 
-                        }catch (IOException h){
-                            h.printStackTrace();
+                            }catch (IOException h){
+                                h.printStackTrace();
+                            }
                         }
                     }
                 }
-
 
                 folder = new File("Map Squares/").listFiles();
                 mapSquares = new String[folder.length];

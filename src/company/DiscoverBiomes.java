@@ -100,7 +100,6 @@ public class DiscoverBiomes {
 
         int count = -1;
         if(folder.length - 1 == contents.length){
-            System.out.println("1");
             for (File file : folder) {
                 count++;
                 boolean exists = false;
@@ -164,7 +163,6 @@ public class DiscoverBiomes {
                 }
             }
         }else {
-            System.out.println("2");
             if (contents != null) {
                 for (File f : contents) {
                     try {
