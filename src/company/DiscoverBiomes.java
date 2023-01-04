@@ -78,19 +78,8 @@ public class DiscoverBiomes {
 
 
     File dir = new File("Map Squares");
+        if(!dir.exists()){dir.mkdirs();}
         File[] contents = dir.listFiles();
-        if (contents != null) {
-            for (File f : contents) {
-                try {
-                Files.delete(Path.of(f.getPath()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        dir.mkdirs();
-
 
         folder = new File("Map").listFiles();
 
@@ -109,14 +98,89 @@ public class DiscoverBiomes {
             e.printStackTrace();
         }
 
+        int count = -1;
+        if(folder.length - 1 == contents.length){
+            System.out.println("1");
+            for (File file : folder) {
+                count++;
+                boolean exists = false;
+                String name = file.getName();
+                if (Character.isDigit(name.charAt(0))) {
+                    assert contents != null;
 
-        for (File file : folder) {
-            boolean exists = false;
-            String name = file.getName();
-            if (Character.isDigit(name.charAt(0))) {
-                String temp = name.substring(0,file.getName().length()-4).replaceAll("[0-9]","");
-                temp =  temp.replace(".", "");
-                if (allStrings.contains(temp)) {
+
+                    String temp = name.substring(0,file.getName().length()-4).replaceAll("[0-9]","");
+                    temp =  temp.replace(".", "");
+                    if (allStrings.contains(temp)) {
+                        try {
+                            if(!name.equals(contents[count].getName())){
+                                contents[count].delete();
+                                BufferedImage bi = ImageIO.read(file);
+                                ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
+                            }
+
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        if (!contents[count].getName().contains("NULL")){
+                            contents[count].delete();
+                            try {
+                                File x = folder[folder.length-1];
+                                BufferedImage bi = ImageIO.read(x);
+                                name  = name.split("\\.")[0]+"."+name.split("\\.")[1]+".NULL.jpg";
+
+                                if((name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28"))&&(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")) ){
+                                    Image result = bi.getSubimage(0,0,375,287);
+                                    bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                    Graphics g = bi.createGraphics();
+                                    g.drawImage(result, 0, 0, null);
+                                    g.dispose();
+                                }else if(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")){
+                                    Image result = bi.getSubimage(0,0,500,287);
+                                    bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                    Graphics g = bi.createGraphics();
+                                    g.drawImage(result, 0, 0, null);
+                                    g.dispose();
+                                }else if(name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28")){
+
+                                    Image result = bi.getSubimage(0,0,375,500);
+                                    bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                    Graphics g = bi.createGraphics();
+                                    g.drawImage(result, 0, 0, null);
+                                    g.dispose();
+                                }
+
+                                ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
+
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }else {
+            System.out.println("2");
+            if (contents != null) {
+                for (File f : contents) {
+                    try {
+                        Files.delete(Path.of(f.getPath()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            for (File file : folder) {
+                boolean exists = false;
+                String name = file.getName();
+                if (Character.isDigit(name.charAt(0))) {
+                    String temp = name.substring(0,file.getName().length()-4).replaceAll("[0-9]","");
+                    temp =  temp.replace(".", "");
+                    if (allStrings.contains(temp)) {
                         try {
                             BufferedImage bi = ImageIO.read(file);
                             ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
@@ -125,50 +189,54 @@ public class DiscoverBiomes {
                             e.printStackTrace();
                         }
 
-                } else {
-                    try {
+                    } else {
+                        try {
 
 
-                        File x = folder[folder.length-1];
-                        BufferedImage bi = ImageIO.read(x);
-                        name  = name.split("\\.")[0]+"."+name.split("\\.")[1]+".NULL.jpg";
+                            File x = folder[folder.length-1];
+                            BufferedImage bi = ImageIO.read(x);
+                            name  = name.split("\\.")[0]+"."+name.split("\\.")[1]+".NULL.jpg";
 
 
 
-                        if((name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28"))&&(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")) ){
-                            Image result = bi.getSubimage(0,0,375,287);
-                            bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
-                            Graphics g = bi.createGraphics();
-                            g.drawImage(result, 0, 0, null);
-                            g.dispose();
-                        }else if(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")){
-                            Image result = bi.getSubimage(0,0,500,287);
-                            bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
-                            Graphics g = bi.createGraphics();
-                            g.drawImage(result, 0, 0, null);
-                            g.dispose();
-                        }else if(name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28")){
+                            if((name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28"))&&(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")) ){
+                                Image result = bi.getSubimage(0,0,375,287);
+                                bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                Graphics g = bi.createGraphics();
+                                g.drawImage(result, 0, 0, null);
+                                g.dispose();
+                            }else if(name.split("\\.")[0].equals("109")|| name.split("\\.")[0].equals("54")){
+                                Image result = bi.getSubimage(0,0,500,287);
+                                bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                Graphics g = bi.createGraphics();
+                                g.drawImage(result, 0, 0, null);
+                                g.dispose();
+                            }else if(name.split("\\.")[1].equals("57")||name.split("\\.")[1].equals("28")){
 
-                            Image result = bi.getSubimage(0,0,375,500);
-                            bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
-                            Graphics g = bi.createGraphics();
-                            g.drawImage(result, 0, 0, null);
-                            g.dispose();
+                                Image result = bi.getSubimage(0,0,375,500);
+                                bi = new BufferedImage(result.getWidth(null), result.getHeight(null),bi.getType());
+                                Graphics g = bi.createGraphics();
+                                g.drawImage(result, 0, 0, null);
+                                g.dispose();
+                            }
+
+                            ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
+
+
+
+                        }catch (IOException e){
+                            e.printStackTrace();
                         }
-
-                        ImageIO.write(bi, "jpg", new File("Map Squares/"+name));
-
-
-
-                    }catch (IOException e){
-                        e.printStackTrace();
                     }
+
+
+
                 }
-
-
-
             }
+
         }
+
+
     }
 
 
