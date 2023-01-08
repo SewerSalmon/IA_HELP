@@ -89,11 +89,11 @@ public class BiomeDisplay extends JPanel{
 
         fileRead();
 
-        JScrollPane scrollBarForTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollBarForTextArea.setBounds(1700,50,220,1080);
-
+        JScrollPane scrollBarForTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollBarForTextArea.setBounds((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() -300,50,300,(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() -50);
+        textArea.setLineWrap(true);textArea.setWrapStyleWord(true);
         label.setVisible(true);
-        label.setBounds(1700,0,1000,50);
+        label.setBounds((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() -300,0,300,50);
         label.setBackground(Color.WHITE);
         label.setOpaque(true);
         this.add(label);

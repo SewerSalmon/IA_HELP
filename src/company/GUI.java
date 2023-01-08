@@ -116,7 +116,7 @@ public class GUI extends JPanel {
             if(e.getActionCommand().equals("Cheats")){
                 cheatsV = !cheatsV;
                 ch.setVisible(cheatsV);
-                ch.setLocation(350,115);
+                ch.setLocation(375,110);
             }
         }
     }
